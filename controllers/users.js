@@ -1,35 +1,27 @@
 const config = require('../config')
-const { needLogin } = require('../utils')
+const { needLogin, renderPage } = require('../utils')
 
 function init(router) {
 
   router.post('/api/user/login', (ctx, next)=> {
     const body =  ctx.request.body
-    if (body.name === config.admin.username && body.password === config.admin.password) {
+    if (body.username === config.admin.username && body.password === config.admin.password) {
       ctx.session.isLogin = true
-      ctx.session.user = body.name
+      ctx.session.user = body.username
       ctx.redirect('/')
     } else {
-      ctx.redirect('back')
+      ctx.throw(401, '用户名或者密码错误')
     }
   })
 
-  router.all('/api/user/logout', (ctx, next)=> {
+  router.get('/api/user/logout', (ctx, next)=> {
     console.log('logout')
     ctx.session = null
     ctx.redirect('/')
   })
 
-  router.get('/login', function showLogin(ctx, next) {
-    const pageStr = `
-      <h1>登录</h1>
-      <form method='post' action='/api/user/login'>
-        <input name='name'></input>
-        <input type='passowrd' name='password'></input>
-        <input type="submit" value="Save">
-      </form>
-    `
-    ctx.body = pageStr
+  router.get('/login', async (ctx, next)=> {
+    await renderPage(ctx, next)
     next()
   })
 

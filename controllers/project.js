@@ -1,4 +1,4 @@
-const { needLogin } = require('../utils')
+const { needLogin, renderPage } = require('../utils')
 const ProjectModel = require('../models/project')
 
 async function addProject(ctx, next) {
@@ -14,9 +14,9 @@ async function addProject(ctx, next) {
     next()
   } catch (err) {
     if (err && err.code === 11000) {
-      ctx.body = '名称重复了'
+      ctx.throw(401, '名称重复了')
     } else {
-      ctx.body = '插入失败'
+      ctx.throw(402, '插入失败')
     }
     next()
   }
@@ -24,24 +24,19 @@ async function addProject(ctx, next) {
 
 async function index(ctx, next) {
   needLogin(ctx, next)
-  list = await ProjectModel.find()
-  const links = list.map((item) => {
-    return `<a href='/project/${item._id}'>${item.name}</a>`
-  })
+  await renderPage(ctx, next)
+  next()
+}
 
-  const pageStr = `
-    <h1>mmREPORTs</h1>
-    ${links.join('</br>')}
-    <form method='post' action='/api/project/add'>
-      <input name='project'></input>
-      <input type="submit" value="Save">
-    </form>
-  `
-  ctx.body = pageStr
+async function getProjects(ctx, next) {
+  list = await ProjectModel.find()
+  console.log('list', list)
+  ctx.body = list
   next()
 }
 
 function init(router) {
+  router.get('/api/projects', getProjects)
   router.post('/api/project/add', addProject)
   router.get('/', index)
 }

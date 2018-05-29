@@ -1,0 +1,30 @@
+.header {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  width: 400px;
+  justify-content: space-between;
+}
+
+.header h1 {
+  margin-bottom: 0;
+}
+
+.container {
+  width: 800px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.project-input {
+  margin-right: 10px;
+}
+
+.project-list {
+  width: 400px;
+  margin-top: 20px;
+}
+
+.logout-button {
+  float: right;
+}
