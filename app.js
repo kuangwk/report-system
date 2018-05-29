@@ -3,8 +3,8 @@ const session = require('koa-session')
 const views = require('koa-views')
 const static = require('koa-static')
 
-const db = require('./db')
-const controller = require('./controllers')
+const db = require('./server/db')
+const controller = require('./server/controllers')
 
 const app = new Koa();
 
