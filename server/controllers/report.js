@@ -160,7 +160,7 @@ async function handleGetRecords(ctx, next) {
   const type = +query.type || 0
   let result
   if (type === REAL_TIME_VIEW) {
-    result = await RecordModel.find(dbQuery, 'reportTime count')
+    result = await RecordModel.find(dbQuery, 'reportTime count -_id')
   } else if (type === HOUR_VIEW) {
     result = await RecordModel.getRecordsGroupByHour(dbQuery)
   } else if (type === MONTH_VIEW) {
