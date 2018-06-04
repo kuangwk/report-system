@@ -2,27 +2,31 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { message, Modal, Menu } from 'antd';
 
+import { getHash } from '../../util'
+
 import './index.less'
 import RecordChart from '../record-chart';
 
 class ProjectPage extends Component {
   constructor({ match }) {
     super()
+    const curAction = getHash('action') || ''
     this.state = {
       appId: match.params.appId,
       project: {},
       actions: [],
-      records: []
+      records: [],
+      curAction
     }
   }
   async componentDidMount() {
-    const appId = this.state.appId
+    const { appId, curAction } = this.state
     try {
       const { data } = await axios.get(`/api/project/${appId}`)
       this.setState({
         project: data.project,
         actions: data.actions,
-        curAction: data.actions[0].action
+        curAction: curAction || data.actions[0].action
       })
     } catch (err) {
       let message
@@ -46,10 +50,12 @@ class ProjectPage extends Component {
     this.setState({
       curAction: e.key
     })
+    location.hash = `action=${e.key}`
   }
 
   renderContent() {
     const { appId, project, actions, curAction, records } = this.state
+    console.log('curAction: ', curAction);
     return (
       <content>
         <Menu

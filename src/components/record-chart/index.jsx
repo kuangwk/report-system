@@ -34,11 +34,14 @@ function getCols(options) {
 }
 
 function getRealTimeChartCols() {
-  const pointInterval = 5
+  const pointInterval = 5 // 多少分钟打一个点
   const start = 0
   const end = DAY / MINUTE // 一天多少分钟
   // 定义度量
   const cols = getCols({
+    count: {
+      alias: `每${pointInterval == 1 ? '': pointInterval}分钟上报量`
+    },
     time: {
       type: 'time',
       formatter: (ts)=> {
@@ -142,12 +145,12 @@ function getInitialPointArray(start, end, pointInterval) {
 }
 
 function putRecordToPointArray(records, pointArr, pointInterval) {
-  const nowIndex = parseInt( getMinutesOfDay(Date.now()) / parseInt ) + 1
+  const nowIndex = parseInt( getMinutesOfDay(Date.now()) / pointInterval )
   records.forEach((record)=> {
     const timeStamp = +new Date(record.reportTime)
     const minuteNumber = getMinutesOfDay(timeStamp)
     const field = getField(timeStamp)
-    const index = parseInt(minuteNumber / pointInterval) + 1
+    const index = parseInt(minuteNumber / pointInterval)
     if (field && pointArr[index]) {
       if (field === 'today' && index >= nowIndex) return // 当前几分钟不显示
       if (!pointArr[index][field]) { pointArr[index][field] = 0 }
@@ -248,8 +251,9 @@ class RecordChart extends Component {
         </div>
         { data &&
           <Chart forceFit height={400} data={data} scale={cols}>
+            <Legend />
             <Axis name="time" />
-            <Axis name="count" />
+            <Axis name="count" title />
             <Tooltip crosshairs={{type : "y"}}/>
             <Geom
               type="line"
