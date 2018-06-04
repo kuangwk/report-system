@@ -23,14 +23,15 @@ class ProjectPage extends Component {
     const { appId, curAction } = this.state
     try {
       const { data } = await axios.get(`/api/project/${appId}`)
+      const firstAction = data.actions[0] ? data.actions[0].action : ''
       this.setState({
         project: data.project,
         actions: data.actions,
-        curAction: curAction || data.actions[0].action
+        curAction: curAction || firstAction
       })
     } catch (err) {
       let message
-      if (err.request.status === 401) {
+      if (err.request && err.request.status === 401) {
         message = '找不到项目'
 
       } else {

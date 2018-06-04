@@ -17,7 +17,7 @@ if (!admin.username || !admin.password) {
 
 const app = new Koa();
 
-app.keys = ['what a sc']
+app.keys = keys
 
 app.use(views(__dirname + '/client'))
 
@@ -28,7 +28,7 @@ app.use(router.routes())
 
 app.use(static(__dirname + '/client'))
 
-console.log('lintening 3000')
+console.log('lintening 3002')
 app.listen(3000);
 
 db.init()
