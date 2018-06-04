@@ -1,7 +1,7 @@
 const Koa = require('koa')
 const session = require('koa-session')
 const views = require('koa-views')
-const static = require('koa-static')
+const staticCache = require('koa-static-cache')
 const { keys, admin } = require('./server/config')
 
 const db = require('./server/db')
@@ -26,7 +26,9 @@ app.use(session(app))
 const router = controller.init()
 app.use(router.routes())
 
-app.use(static(__dirname + '/client'))
+app.use(staticCache(__dirname + '/client'), {
+  maxAge: 60 * 60 * 24
+})
 
 console.log('lintening 3002')
 app.listen(3002);
