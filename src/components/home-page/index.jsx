@@ -14,7 +14,7 @@ export default class HomePage extends Component {
     }
   }
 
-  async componentDidMount () {
+  async fetchProjectList() {
     try {
       const { data } = await axios.get('/api/projects')
       console.log('projects', data)
@@ -24,6 +24,11 @@ export default class HomePage extends Component {
     } catch (error) {
       message.error('拉取项目列表失败')
     }
+
+  }
+
+  componentDidMount () {
+    this.fetchProjectList()
   }
 
   async handleSubmit(e) {
@@ -31,6 +36,7 @@ export default class HomePage extends Component {
     const value = this.Input.input.value
     try {
       await axios.post('/api/project/add', { project: value })
+      this.fetchProjectList()
     } catch (error) {
       const response = error.response || {}
       if (response.status === 401) {
@@ -65,6 +71,7 @@ export default class HomePage extends Component {
               name='project'
               style={{width: 200}}
               ref={(Input)=> this.Input = Input}
+              autoComplete='off'
             />
             <Button
               type='primary'

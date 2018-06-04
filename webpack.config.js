@@ -4,6 +4,7 @@ module.exports = {
   mode: 'development', // development | production
   entry: './src/index.jsx',
   output: {
+    publicPath: '/',
     filename: 'bundle.js',
     path: __dirname + '/client'
   },
@@ -24,10 +25,17 @@ module.exports = {
         'babel-loader'
       ]
     }, {
+      test: /\.less$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        'less-loader' // compiles Less to CSS
+      ]
+    }, {
       test: /\.css$/,
       use: [
         'style-loader',
-        'css-loader'
+        'css-loader',
       ]
     }]
   }

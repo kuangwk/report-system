@@ -20,10 +20,7 @@ function init(router) {
     ctx.redirect('/')
   })
 
-  router.get('/login', async (ctx, next)=> {
-    await renderPage(ctx, next)
-    next()
-  })
+  router.get('/login', renderPage)
 
 }
 
