@@ -29,6 +29,6 @@ app.use(router.routes())
 app.use(static(__dirname + '/client'))
 
 console.log('lintening 3002')
-app.listen(3000);
+app.listen(3002);
 
 db.init()
