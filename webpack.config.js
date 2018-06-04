@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
-  mode: 'development', // development | production
   entry: './src/index.jsx',
   output: {
     publicPath: '/',
@@ -15,7 +15,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: __dirname + '/src/index.html',
       filename: 'index.html'
-    })
+    }),
+    // new BundleAnalyzerPlugin() // 分析包大小
   ],
   module: {
     rules: [{

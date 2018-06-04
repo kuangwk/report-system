@@ -4,8 +4,10 @@ module.exports = {
     port: '27017',
     database: 'reports'
   },
+  // use this to login
   admin: {
-    username: 'r-admin',
+    username: 'admin',
     password: '123456'
-  }
+  },
+  keys: ['i am key']
 }

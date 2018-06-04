@@ -55,7 +55,6 @@ class ProjectPage extends Component {
 
   renderContent() {
     const { appId, project, actions, curAction, records } = this.state
-    console.log('curAction: ', curAction);
     return (
       <content>
         <Menu
@@ -91,7 +90,7 @@ class ProjectPage extends Component {
       <div className='project-container'>
         <header>
           <h1>{project.name}</h1>
-          <div>{appId}</div>
+          <div> appId: {appId} </div>
         </header>
         {this.renderContent()}
       </div>
