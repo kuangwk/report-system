@@ -14,7 +14,7 @@ const {
  } = require('../../common/constant')
 
 // 有上报后多久自动保存到数据库
-const AUTO_SAVE_DELAY = 1 * 1000  // TODOS: 间距改大一点
+const AUTO_SAVE_DELAY = 60 * 1000 //  单位：s  TODOS: 间距改大一点
 
 function addToReportCache(appId, action) {
   const timeStr = +(new Date()).setSeconds(0, 0)
