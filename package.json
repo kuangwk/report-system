@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon app",
     "dev": "webpack --watch --mode=development",
-    "dist": "webpack --mode=production"
+    "dist": "npm i && webpack --mode=production"
   },
   "keywords": [
     "reports"
